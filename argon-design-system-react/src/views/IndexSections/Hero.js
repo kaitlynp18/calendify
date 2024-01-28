@@ -4,10 +4,24 @@ import ReactPlayer from 'react-player';
 import { useNavigate } from 'react-router-dom';
 import { Button, Container, Modal, ModalBody } from "reactstrap";
 import fullLogo from '../../assets/img/brand/full_logo.png';
-import startVideo from '../../assets/videos/home_start.mp4';
-import staticVideo from '../../assets/videos/home_static.mp4';
+import startVideo1 from '../../assets/videos/home_start.mp4';
+import staticVideo1 from '../../assets/videos/home_static.mp4';
+import startVideo2 from '../../assets/videos/home_start2.mp4';
+import staticVideo2 from '../../assets/videos/home_static2.mp4';
 import "../../assets/vendor/font-awesome/css/font-awesome.css";
 
+const isLocal = process.env.NODE_ENV === 'development';
+
+let startVideo;
+let staticVideo;
+
+if (isLocal) {
+  startVideo = startVideo1;
+  staticVideo = staticVideo1;
+} else {
+  startVideo = startVideo2;
+  staticVideo = staticVideo2;
+}
 
 const thumbsContainer = {
   display: 'flex',
