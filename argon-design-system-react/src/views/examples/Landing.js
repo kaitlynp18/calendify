@@ -210,7 +210,7 @@ const CalendarApp = () => {
           <Container className="py-lg-md d-flex">
             <div style={{ color: 'white', width: '100%' }}>
               <h2 style={{ color: 'white', fontSize: '27px', fontWeight: 'bold'}}>Here's what we found:</h2>
-              <p style={{ color: 'white', fontSize: '20px' }}>This is what will be added to your calendar. You can remove and edit any of the events below. </p>
+              <p style={{ color: 'white', fontSize: '20px' }}>This is what will be added to your calendar. You can remove or edit any of the events below. </p>
               {events.map((event, index) => (
               <div>
                 <div
@@ -226,7 +226,6 @@ const CalendarApp = () => {
                 >
                   <div
                     style={{
-                      marginBottom: '10px',
                       display: 'flex',
                       alignItems: 'center',
                       cursor: 'pointer',
@@ -234,10 +233,7 @@ const CalendarApp = () => {
                     onClick={() => handleToggleExpand(index)}
                   >
 
-                    <label style={{ width: '82px', color: 'white', marginTop: '8px', marginRight: '10px' }}>Event:</label>
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                      <span style={{ marginRight: '10px' }}>{event.summary}</span>
-                    </div>
+                    <label style={{ fontWeight: 'bold', color: 'white', marginTop: '9px', marginBottom: '9px', marginRight: '10px' }}>{event.summary}</label>
                     <div style={{marginLeft: 'auto'}}>
                     {expandedEventIndex === index ? (
                         <i className="fa fa-chevron-up" />
