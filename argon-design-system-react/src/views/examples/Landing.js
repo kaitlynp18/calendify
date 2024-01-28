@@ -1,5 +1,5 @@
-
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useLocation } from 'react-router-dom';
 import classnames from "classnames";
 
 // reactstrap components
@@ -15,8 +15,19 @@ import {
   Button,
 } from "reactstrap";
 
-const CalendarApp = () => {
-  const calendarInput = `\nBEGIN:VCALENDAR\nVERSION:2.0\nCALSCALE:GREGORIAN\n\nBEGIN:VEVENT\nSUMMARY:MATH 458 Lecture\nDTSTART;TZID=America/New_York:20240104T160500\nDTEND;TZID=America/New_York:20240104T173500\nRRULE:FREQ=WEEKLY;UNTIL=20240409T235959Z;BYDAY=TU,TH;WKST=SU\nEXDATE;TZID=America/New_York:20240305T160500,20240307T160500\nLOCATION:BH 1104\nEND:VEVENT\n\nBEGIN:VEVENT\nSUMMARY:MATH 458 Office Hours\nDTSTART;TZID=America/New_York:20240104T130000\nDTEND;TZID=America/New_York:20240104T140000\nRRULE:FREQ=WEEKLY;UNTIL=20240409T235959Z;BYDAY=TH;WKST=SU\nEXDATE;TZID=America/New_York:20240307T130000\nLOCATION:BH 924\nEND:VEVENT\n\nBEGIN:VEVENT\nSUMMARY:MATH 458 Assignment 1 Due\nDTSTART;VALUE=DATE:20230202\nDTEND;VALUE=DATE:20230203\nDESCRIPTION:Worth 5% of the final mark\nEND:VEVENT\n\nBEGIN:VEVENT\nSUMMARY:MATH 458 Assignment 2 Due\nDTSTART;VALUE=DATE:20230223\nDTEND;VALUE=DATE:20230224\nDESCRIPTION:Worth 5% of the final mark\nEND:VEVENT\n\nBEGIN:VEVENT\nSUMMARY:MATH 458 Assignment 3 Due\nDTSTART;VALUE=DATE:20230322\nDTEND;VALUE=DATE:20230323\nDESCRIPTION:Worth 5% of the final mark\nEND:VEVENT\n\nBEGIN:VEVENT\nSUMMARY:MATH 458 Assignment 4 Due\nDTSTART;VALUE=DATE:20230329\nDTEND;VALUE=DATE:20230330\nDESCRIPTION:Worth 5% of the final mark\nEND:VEVENT\n\nBEGIN:VEVENT\nSUMMARY:MATH 458 Midterm Exam\nDTSTART;TZID=America/New_York:20240313T180000\nDTEND;TZID=America/New_York:20240313T200000\nDESCRIPTION:Worth 30% of the final mark\nLOCATION:TBA\nEND:VEVENT\n\nBEGIN:VEVENT\nSUMMARY:MATH 350 Lecture\nDTSTART;TZID=America/Montreal:20230830T143500\nDTEND;TZID=America/Montreal:20230830T155500\nRRULE:FREQ=WEEKLY;UNTIL=20231205T235959Z;BYDAY=TU,TH;WKST=SU\nEXDATE;TZID=America/Montreal:20231006T143500,20231010T143500\nLOCATION:Maass Chemistry Building 217\nEND:VEVENT\n\nBEGIN:VEVENT\nSUMMARY:MATH 350 Office Hours\nDTSTART;TZID=America/Montreal:20230830T123000\nDTEND;TZID=America/Montreal:20230830T133000\nRRULE:FREQ=WEEKLY;UNTIL=20231205T235959Z;BYDAY=TU,TH;WKST=SU\nEXDATE;TZID=America/Montreal:20231006T123000,20231010T123000\nLOCATION:Room 1116, Burnside Building OR Online\nEND:VEVENT\n\nEND:VCALENDAR\n`;
+const CalendarApp = (props) => {
+  const location = useLocation();
+  const calendarInput = location.state?.data;
+  console.log(calendarInput);
+
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    if (calendarInput) {
+      const parsedEvents = parseCalendarData(calendarInput);
+      setEvents(parsedEvents);
+    }
+  }, [calendarInput]);
 
   const parseCalendarData = (calendarData) => {
     const events = [];
@@ -114,8 +125,6 @@ const CalendarApp = () => {
     const excludeDates = excludeDatesString.split(',');
     return excludeDates.map(date => parseDateTime(date));
   };
-
-  const [events, setEvents] = useState(parseCalendarData(calendarInput));
 
   const mainRef = useRef(null);
 

@@ -1,7 +1,7 @@
 {
   "name": "argon-design-system-react",
   "version": "1.1.2",
-  "description": "React version of Argon Design System by Creative Tim",
+  "description": "Calendify",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -22,13 +22,15 @@
     "argon-design-system-react",
     "design-system-react"
   ],
-  "author": "Creative Tim",
+  "author": "Rylan Donohoe and Kaitlyn Pereira",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/creativetimofficial/argon-design-system-react/issues"
   },
-  "homepage": "https://demos.creative-tim.com/argon-design-system-react/",
+  "homepage": "http://mycalendify.co/",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -58,7 +60,7 @@
     "react-dom": ">=16.0.0",
     "react-dropzone": "^14.2.3",
     "react-player": "^2.14.1",
-    "react-router-dom": "6.11.1",
+    "react-router-dom": "^6.21.3",
     "react-scripts": "^5.0.1",
     "reactstrap": "8.10.0",
     "sass": "1.62.1",

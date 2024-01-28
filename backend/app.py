@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request, session
+from flask_cors import CORS
 from flask_session import Session
 import json
 import openai
@@ -6,6 +7,7 @@ from keys import OPENAI_API_KEY
 import pdfplumber
 
 app = Flask(__name__)
+CORS(app)
 openai.api_key = OPENAI_API_KEY
 
 app.config["SESSION_TYPE"] = "filesystem"
@@ -36,10 +38,7 @@ def read_pdf():
             session_text += "--- End of File ---\n"
     
     session['pdf_text'] = session_text
-    return jsonify({"message": "PDFs processed successfully"}), 200
 
-@app.route('/query_openai', methods=['POST'])
-def query_openai():
     intro_text = ("Given the following course syllabi, write an ICS file with all the key dates and details related to classes, "
                   "office hours, exams, and assignment due dates spanning from the classes_start date to the classes_end date, "
                   "excluding any dates during the break inclusively. If any information is missing, leave the corresponding field "
@@ -59,12 +58,8 @@ def query_openai():
         term_dates = json.load(config_file)
     term_info = f"\nTerm Information:\nFall 2023: {term_dates['fall2023']}\nWinter 2024: {term_dates['winter2024']}\n"
     
-    # load pdf text
-    pdf_text = session.get('pdf_text', '')
-    if not pdf_text:
-        return jsonify({"error": "No PDF text available"}), 400
-    
-    query = intro_text + term_info + pdf_text
+    query = intro_text + term_info + session_text
+    print(query)
 
     try:
         response = openai.ChatCompletion.create(
