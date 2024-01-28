@@ -23,46 +23,6 @@ if (isLocal) {
   staticVideo = staticVideo2;
 }
 
-const thumbsContainer = {
-  display: 'flex',
-  flexDirection: 'row',
-  flexWrap: 'wrap',
-  marginTop: 16
-};
-
-
-const thumb = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  //borderRadius: 2,
-  //border: '1px solid #eaeaea',
-  marginBottom: 16,
-  marginRight: 16,
-  width: 150,
-  height: 200,
-  boxSizing: 'border-box',
-};
-
-
-const thumbInner = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  minWidth: 0,
-  overflow: 'hidden',
-  width: '100%',
-  height: '100%',
-};
-
-
-const img = {
-  display: 'block',
-  width: 'auto',
-  height: '100%'
-};
-
 
 const UploadComponent = () => {
   const [files, setFiles] = useState([]); // Corrected the state setter for files
@@ -84,7 +44,7 @@ const UploadComponent = () => {
       });
   }, []);
 
-  const { getRootProps, getInputProps, open, acceptedFiles } = useDropzone({
+  const { getRootProps, getInputProps, open } = useDropzone({
     noClick: true,
     noKeyboard: true,
     accept: {
@@ -135,6 +95,8 @@ const UploadComponent = () => {
         body: formData,
       });
 
+      console.log(response)
+
       const data = await response.json();
 
       navigate('/landing-page', { state: { data } });
@@ -162,7 +124,7 @@ const UploadComponent = () => {
     <div className="position-relative">
       <section className="section section-hero section-shaped" style={{ height: "100vh" }}>
 
-        <div style={{ position: 'absolute', top: 0, right: '1122px', margin: '20px' }}>
+        <div style={{ position: 'absolute', top: 0, left: '4px', margin: '20px' }}>
           <img src={fullLogo} alt="Full Logo" style={{ height: '50px', width: 'auto' }} />
         </div>
 
@@ -227,7 +189,7 @@ const UploadComponent = () => {
                 <>
                   <div {...getRootProps({ className: 'dropzone' })}>
                     <input {...getInputProps()} />
-                    <img src={require("assets/img/theme/image-pdfs.png")} style={{ height: "95px", display: "block", margin: "0 auto" }} />
+                    <img src={require("assets/img/theme/image-pdfs.png")} alt="Placeholder" style={{ height: "95px", display: "block", margin: "0 auto" }} />
                     <Button className="btn-white btn-icon mb-3 mt-3" color="default" size="m" onClick={open}>
                       <span className="btn-inner--icon mr-1" style={{ marginTop: "8px" }}>
                         <i className="fa fa-file-pdf-o" />

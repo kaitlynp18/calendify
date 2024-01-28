@@ -66,6 +66,7 @@ def read_pdf():
             model="gpt-4-turbo-preview",
             messages=[{"role": "user", "content": query}]
         )
+        print(response)
         return jsonify(response.choices[0].message['content'])
     except Exception as e:
         return jsonify({"error": str(e)}), 500
