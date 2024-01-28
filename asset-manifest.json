@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.c08d30ba.css",
-    "main.js": "/static/js/main.458fa83b.js",
+    "main.js": "/static/js/main.ff73e771.js",
     "reactPlayerYouTube.js": "/static/js/reactPlayerYouTube.783ba706.chunk.js",
     "reactPlayerSoundCloud.js": "/static/js/reactPlayerSoundCloud.a0c5c6b0.chunk.js",
     "reactPlayerVimeo.js": "/static/js/reactPlayerVimeo.8666ef7f.chunk.js",
@@ -16,7 +16,9 @@
     "reactPlayerFilePlayer.js": "/static/js/reactPlayerFilePlayer.2a55d4ca.chunk.js",
     "reactPlayerPreview.js": "/static/js/reactPlayerPreview.54af2780.chunk.js",
     "static/media/home_static.mp4": "/static/media/home_static.e5e028fdbb62cfd2c45c.mp4",
+    "static/media/home_static2.mp4": "/static/media/home_static2.7cd413a9462abdb10788.mp4",
     "static/media/home_start.mp4": "/static/media/home_start.bee7d2bdc9ac58cd23c9.mp4",
+    "static/media/home_start2.mp4": "/static/media/home_start2.d58803b566441d1cc603.mp4",
     "static/media/fontawesome-webfont.svg?v=4.7.0": "/static/media/fontawesome-webfont.c1e38fd9e0e74ba58f7a.svg",
     "static/media/fontawesome-webfont.eot": "/static/media/fontawesome-webfont.8b43027f47b20503057d.eot",
     "static/media/fontawesome-webfont.ttf?v=4.7.0": "/static/media/fontawesome-webfont.1e59d2330b4c6deb84b3.ttf",
@@ -25,6 +27,7 @@
     "static/media/fontawesome-webfont.woff?v=4.7.0": "/static/media/fontawesome-webfont.f691f37e57f04c152e23.woff",
     "static/media/fontawesome-webfont.woff2?v=4.7.0": "/static/media/fontawesome-webfont.20fd1704ea223900efa9.woff2",
     "static/media/image-pdfs.png": "/static/media/image-pdfs.32370d0f2ccb0fe8c116.png",
+    "static/media/loading.gif": "/static/media/loading.90672f1deffccbcdf4f1.gif",
     "static/media/full_logo.png": "/static/media/full_logo.8f01555c7bed87f92da8.png",
     "static/media/argon-react.png": "/static/media/argon-react.128d71d316a8e92aff4a.png",
     "static/media/argon-react-white.png": "/static/media/argon-react-white.e4dd3b41697ada43fdcb.png",
@@ -37,7 +40,7 @@
     "static/media/github.svg": "/static/media/github.6c95555646a0ecabf549179c97bf0e7d.svg",
     "index.html": "/index.html",
     "main.c08d30ba.css.map": "/static/css/main.c08d30ba.css.map",
-    "main.458fa83b.js.map": "/static/js/main.458fa83b.js.map",
+    "main.ff73e771.js.map": "/static/js/main.ff73e771.js.map",
     "reactPlayerYouTube.783ba706.chunk.js.map": "/static/js/reactPlayerYouTube.783ba706.chunk.js.map",
     "reactPlayerSoundCloud.a0c5c6b0.chunk.js.map": "/static/js/reactPlayerSoundCloud.a0c5c6b0.chunk.js.map",
     "reactPlayerVimeo.8666ef7f.chunk.js.map": "/static/js/reactPlayerVimeo.8666ef7f.chunk.js.map",
@@ -54,6 +57,6 @@
   },
   "entrypoints": [
     "static/css/main.c08d30ba.css",
-    "static/js/main.458fa83b.js"
+    "static/js/main.ff73e771.js"
   ]
 }
