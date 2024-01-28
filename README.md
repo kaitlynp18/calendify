@@ -1,1 +1,2 @@
-# calendify
+# Calendify
+Calendify transforms the tedious task of manually entering syllabus dates into a fun and easy experience. Users upload PDFs of their syllabi, and Calendify extracts all the important information. Users are given a preview where they can decide to remove certain events (for those who never attend tutorials...), or edit any details including date and time, location, and even a description (it automatically adds grading weights here if available!). Once satisfied, simply press confirm to download the .ics file that can be uploaded to the calendar app of your choice.
