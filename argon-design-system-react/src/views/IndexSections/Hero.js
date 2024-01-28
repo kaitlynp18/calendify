@@ -15,8 +15,10 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDropzone } from "react-dropzone";
+import "../../assets/vendor/font-awesome/css/font-awesome.css";
+
 
 // reactstrap components
 import { Button, Container, Row, Col } from "reactstrap";
@@ -29,21 +31,27 @@ const thumbsContainer = {
 };
 
 const thumb = {
-  display: 'inline-flex',
-  borderRadius: 2,
-  border: '1px solid #eaeaea',
-  marginBottom: 8,
-  marginRight: 8,
-  width: 100,
-  height: 100,
-  padding: 4,
-  boxSizing: 'border-box'
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  //borderRadius: 2,
+  //border: '1px solid #eaeaea',
+  marginBottom: 16,
+  marginRight: 16,
+  width: 150,
+  height: 200,
+  boxSizing: 'border-box',
 };
 
 const thumbInner = {
   display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
   minWidth: 0,
-  overflow: 'hidden'
+  overflow: 'hidden',
+  width: '100%',
+  height: '100%',
 };
 
 const img = {
@@ -53,17 +61,30 @@ const img = {
 };
 
 const UploadComponent = () => {
+  const [setFiles] = useState([]);
   const {getRootProps, getInputProps, open, acceptedFiles} = useDropzone({
     // Disable click and keydown behavior
     noClick: true,
-    noKeyboard: true
+    noKeyboard: true,
+    accept:{
+      'application/pdf':['.pdf']
+    },
+    maxFiles:5
   });
-
   const files = acceptedFiles.map(file => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
+    <li key={file.path} style={{ listStyle: 'none', textAlign: 'left', display: 'flex', alignItems: 'center', color: 'white' }}>
+      <i className="fa fa-paperclip" aria-hidden="true" style={{ marginRight: '10px' }}></i>
+      {file.path}
+      <i className="fa fa-trash-o" aria-hidden="true" style={{ marginLeft: 'auto', cursor: 'pointer' }} onClick={() => handleDelete(file)}></i>
     </li>
   ));
+
+  const handleDelete = (fileToDelete) => {
+    // Implement logic to delete the file from the state or perform any necessary actions
+    setFiles((prevFiles) => prevFiles.filter((file) => file !== fileToDelete));
+  };
+  
+  
     return (
       <>
         <div className="position-relative">
@@ -95,62 +116,34 @@ const UploadComponent = () => {
                     <p className="lead text-white">
                       Calendify - a web app to automatically generate a calendar from your syllabus.
                     </p>
-                    <div className="btn-wrapper mt-5">
-                      <Button
-                        className="btn-white btn-icon mb-3 mb-sm-0"
-                        color="default"
-                        href="https://www.creative-tim.com/product/argon-design-system-react?ref=adsr-landing-page"
-                        size="lg"
-                      >
-                        <span className="btn-inner--icon mr-1">
-                          <i className="ni ni-cloud-download-95" />
-                        </span>
-                        <span className="btn-inner--text">Download React</span>
-                      </Button>{" "}
-                      <Button
-                        className="btn-icon mb-3 mb-sm-0"
-                        color="github"
-                        href="https://github.com/creativetimofficial/argon-design-system-react"
-                        size="lg"
-                        target="_blank"
-                      >
-                        <span className="btn-inner--icon mr-1">
-                          <i className="fa fa-github" />
-                        </span>
-                        <span className="btn-inner--text">
-                          <span className="text-warning mr-1">Star us</span>
-                          on Github
-                        </span>
-                      </Button>
-                    </div>
-                    <div className="mt-5">
-                      <small className="text-white font-weight-bold mb-0 mr-2">
-                        *proudly coded by
-                      </small>
-                      <img
-                        alt="..."
-                        className="ml-1"
-                        style={{ height: "28px" }}
-                        src={require("assets/img/brand/creativetim-white-slim.png")}
-                      />
-                    </div>
-                    <div className="upload-container" style={{ backgroundColor: "rgba(255, 255, 255, 0.5)" }}>
-                    <div {...getRootProps({className: 'dropzone'})}>
-        <input {...getInputProps()} />
-        <p>Drag 'n' drop some files here</p>
-        <button type="button" onClick={open}>
-          Open File Dialog
-        </button>
-      </div>
-      <aside>
-        <h4>Files</h4>
-        <ul>{files}</ul>
-      </aside>
-                    </div>
                   </Col>
                 </Row>
+                <div className="upload-container" style={{ backgroundColor: "rgba(255, 255, 255, 0.5)", margin: "0 auto", padding: "20px", borderRadius: "10px", border: "2px solid #ccc", textAlign: "center", position: "relative" }}>
+                    <div {...getRootProps({className: 'dropzone'})}>
+                      <input {...getInputProps()} />
+                      <img src={require("assets/img/theme/image-pdfs.png")}style={{ height: "100px", display: "block", margin: "0 auto" }}/>
+                      <Button
+                        className="btn-white btn-icon mb-3 mt-3"
+                        color="default"
+                        size="m"
+                        onClick={open}
+                      >
+                        <span className="btn-inner--icon mr-1" style={{ marginTop: "8px" }}>
+                          <i className="fa fa-file-pdf-o" />
+                        </span>
+                        <span className="btn-inner--text">Choose Files</span>
+                      </Button>
+                      <p style={{ color: 'white', fontSize: '17px' }}>... or drop files here</p>
+                    </div>
+                    <div style={{ position: "absolute", top: "0", left: "0", right: "0", bottom: "0", border: "1px dotted #ccc", borderRadius: "8px", pointerEvents: "none" }}></div>
+                    
+                    </div>
+                    <aside>
+                      <ul>{files}</ul>
+                    </aside>
               </div>
             </Container>
+            
           </section>
         </div>
       </>

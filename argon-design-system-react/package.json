@@ -71,7 +71,7 @@
     "@types/react": "18.2.6",
     "eslint-plugin-flowtype": "8.0.3",
     "jquery": "3.7.0",
-    "typescript": "5.0.4"
+    "typescript": "5.0.1"
   },
   "overrides": {
     "svgo": "3.0.2"
