@@ -1,0 +1,12 @@
+{
+    "fall2023": {"classes_start": "2023-08-30",
+                  "classes_end": "2023-12-05",
+                  "break_start": "2023-10-06",
+                  "break_end": "2023-10-11"
+    },
+    "winter2024": {"classes_start": "2024-01-04",
+                  "classes_end": "2024-04-12",
+                  "break_start": "2024-03-04",
+                  "break_end": "2024-03-08"
+    }    
+}
