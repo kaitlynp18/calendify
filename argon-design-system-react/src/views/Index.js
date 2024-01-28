@@ -37,11 +37,9 @@ class Index extends React.Component {
   render() {
     return (
       <>
-        <DemoNavbar />
         <main ref="main">
           <Hero />
         </main>
-        <SimpleFooter />
       </>
     );
   }

@@ -1,77 +1,37 @@
-/*!
-
-=========================================================
-* Argon Design System React - v1.1.2
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-design-system-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-design-system-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDropzone } from "react-dropzone";
-import "../../assets/vendor/font-awesome/css/font-awesome.css";
-
-
-// reactstrap components
-import { Button, Container, Row, Col } from "reactstrap";
-
-const thumbsContainer = {
-  display: 'flex',
-  flexDirection: 'row',
-  flexWrap: 'wrap',
-  marginTop: 16
-};
-
-const thumb = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  //borderRadius: 2,
-  //border: '1px solid #eaeaea',
-  marginBottom: 16,
-  marginRight: 16,
-  width: 150,
-  height: 200,
-  boxSizing: 'border-box',
-};
-
-const thumbInner = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  minWidth: 0,
-  overflow: 'hidden',
-  width: '100%',
-  height: '100%',
-};
-
-const img = {
-  display: 'block',
-  width: 'auto',
-  height: '100%'
-};
+import ReactPlayer from 'react-player';
+import { Button, Container } from "reactstrap";
+import fullLogo from '../../assets/img/brand/full_logo.png';
+import startVideo from '../../assets/videos/home_start.mp4';
+import staticVideo from '../../assets/videos/home_static.mp4';
 
 const UploadComponent = () => {
-  const [setFiles] = useState([]);
+  const [files, setFiles] = useState([]); // Corrected the state setter for files
+  const [playStartVideo, setPlayStartVideo] = useState(true);
+  const [playStaticVideo, setPlayStaticVideo] = useState(false); // Added state for static video
+
   const {getRootProps, getInputProps, open, acceptedFiles} = useDropzone({
-    // Disable click and keydown behavior
     noClick: true,
     noKeyboard: true,
-    accept:{
-      'application/pdf':['.pdf']
-    },
+    accept: 'application/pdf',
     maxFiles:5
   });
-  const files = acceptedFiles.map(file => (
+
+  const handleVideoProgress = (state) => {
+    // Check if the start video has reached 95% of its duration
+    if (state.playedSeconds / state.loadedSeconds >= 0.75) {
+      setPlayStaticVideo(true);
+    }
+  };
+
+  const handleVideoEnd = () => {
+    setPlayStartVideo(false);
+    setPlayStaticVideo(true); // Ensure static video plays after start video ends
+  };
+
+  // Map over the accepted files
+  const fileElements = acceptedFiles.map(file => (
     <li key={file.path} style={{ listStyle: 'none', textAlign: 'left', display: 'flex', alignItems: 'center', color: 'white' }}>
       <i className="fa fa-paperclip" aria-hidden="true" style={{ marginRight: '10px' }}></i>
       {file.path}
@@ -80,74 +40,87 @@ const UploadComponent = () => {
   ));
 
   const handleDelete = (fileToDelete) => {
-    // Implement logic to delete the file from the state or perform any necessary actions
-    setFiles((prevFiles) => prevFiles.filter((file) => file !== fileToDelete));
+    setFiles(currentFiles => currentFiles.filter(file => file.path !== fileToDelete.path));
   };
-  
-  
-    return (
-      <>
-        <div className="position-relative">
-          {/* Hero for FREE version */}
-          <section className="section section-hero section-shaped" style={{ height: "100vh" }}>
-            {/* Background circles */}
-            <div className="shape shape-style-1 shape-default">
-              <span className="span-150" />
-              <span className="span-50" />
-              <span className="span-50" />
-              <span className="span-75" />
-              <span className="span-100" />
-              <span className="span-75" />
-              <span className="span-50" />
-              <span className="span-100" />
-              <span className="span-50" />
-              <span className="span-100" />
-            </div>
-            <Container className="shape-container d-flex align-items-center py-lg">
-              <div className="col px-0">
-                <Row className="align-items-center justify-content-center">
-                  <Col className="text-center" lg="6">
-                    <img
-                      alt="..."
-                      className="img-fluid"
-                      src={require("assets/img/brand/argon-react-white.png")}
-                      style={{ width: "200px" }}
-                    />
-                    <p className="lead text-white">
-                      Calendify - a web app to automatically generate a calendar from your syllabus.
-                    </p>
-                  </Col>
-                </Row>
-                <div className="upload-container" style={{ backgroundColor: "rgba(255, 255, 255, 0.5)", margin: "0 auto", padding: "20px", borderRadius: "10px", border: "2px solid #ccc", textAlign: "center", position: "relative" }}>
-                    <div {...getRootProps({className: 'dropzone'})}>
-                      <input {...getInputProps()} />
-                      <img src={require("assets/img/theme/image-pdfs.png")}style={{ height: "100px", display: "block", margin: "0 auto" }}/>
-                      <Button
-                        className="btn-white btn-icon mb-3 mt-3"
-                        color="default"
-                        size="m"
-                        onClick={open}
-                      >
-                        <span className="btn-inner--icon mr-1" style={{ marginTop: "8px" }}>
-                          <i className="fa fa-file-pdf-o" />
-                        </span>
-                        <span className="btn-inner--text">Choose Files</span>
-                      </Button>
-                      <p style={{ color: 'white', fontSize: '17px' }}>... or drop files here</p>
-                    </div>
-                    <div style={{ position: "absolute", top: "0", left: "0", right: "0", bottom: "0", border: "1px dotted #ccc", borderRadius: "8px", pointerEvents: "none" }}></div>
-                    
-                    </div>
-                    <aside>
-                      <ul>{files}</ul>
-                    </aside>
-              </div>
-            </Container>
-            
-          </section>
+
+  return (
+    <div className="position-relative">
+      <section className="section section-hero section-shaped" style={{ height: "100vh" }}>
+        
+        <div style={{ position: 'absolute', top: 0, right: '1122px', margin: '20px' }}>
+            <img src={fullLogo} alt="Full Logo" style={{ height: '50px', width: 'auto' }} />
         </div>
-      </>
-    );
-  }
+
+        {/* Video Player */}
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '45vh' }}>
+        {playStartVideo && (
+            <ReactPlayer
+              url={startVideo}
+              playing
+              muted
+              width='100%'
+              height='100%'
+              onEnded={handleVideoEnd}
+              onProgress={handleVideoProgress}
+            />
+          )}
+          {playStaticVideo && (
+            <ReactPlayer
+              url={staticVideo}
+              playing
+              muted
+              loop
+              width='100%'
+              height='100%'
+            />
+          )}
+        </div>
+
+        <div className="shape shape-style-1" style={{ backgroundColor: '#7086F0' }}>
+          {/* Background circles */}
+          <span className="span-150" />
+          <span className="span-50" />
+          <span className="span-50" />
+          <span className="span-75" />
+          <span className="span-100" />
+          <span className="span-75" />
+          <span className="span-50" />
+          <span className="span-100" />
+          <span className="span-50" />
+          <span className="span-100" />
+        </div>
+        <div className="position-relative" style={{ display: "flex", flexDirection: "column", height: "65vh", justifyContent: "flex-end" }}>
+          <Container className="shape-container py-lg" style={{ width: "100%"}}>
+            <div className="upload-container" style={{ backgroundColor: "rgba(255, 255, 255, 0.5)", margin: "0 auto", padding: "23px 23px 8px 23px", borderRadius: "15px", border: "4px solid #5459BE", textAlign: "center", position: "relative" }}>
+              <div {...getRootProps({ className: 'dropzone' })}>
+                <input {...getInputProps()} />
+                <img src={require("assets/img/theme/image-pdfs.png")} style={{ height: "100px", display: "block", margin: "0 auto" }}/>
+                <Button className="btn-white btn-icon mb-4 mt-4" color="default" size="m" onClick={open}>
+                  <span className="btn-inner--icon mr-1" style={{ marginTop: "8px" }}>
+                    <i className="fa fa-file-pdf-o" />
+                  </span>
+                  <span className="btn-inner--text">CHOOSE FILES</span>
+                </Button>
+                <p style={{ color: "white", fontSize: "17px", padding: "0px" }}>or drop files here</p>
+              </div>
+              <div style={{ position: "absolute", top: "5px", left: "5px", right: "5px", bottom: "5px", border: "2px dashed #718AF1", borderRadius: "8px", pointerEvents: "none" }}></div>
+            </div>
+  
+            <Button className="btn-white btn-icon mt-4" color="default" size="m" style={{ display: "block", margin: "1rem auto", width: "fit-content" }}>
+              <span className="btn-inner--icon mr-1" style={{ marginTop: "8px" }}>
+                <i className="fa fa-calendar-plus-o" />
+              </span>
+              <span className="btn-inner--text">CALENDIFY</span>
+            </Button>
+  
+            <aside style={{ marginTop: "85px" }}>
+              <ul>{files}</ul>
+            </aside>
+          </Container>
+        </div>
+      </section>
+    </div>
+  );  
+}
 
 export default UploadComponent;

@@ -1,6 +1,6 @@
 .section {
     position: relative;
-    padding-top: $spacer * 4;
+    padding-top: $spacer * 1.4;
     padding-bottom: $spacer * 4;
 }
 
@@ -257,7 +257,7 @@
         :nth-child(7) {
             bottom: 50%;
             right: 36%;
-            background: rgba(255, 255, 255, .04);
+            background: rgba(255, 255, 255, 0);
         }
 
         :nth-child(8) {
